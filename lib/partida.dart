@@ -1,8 +1,8 @@
 enum Estado{creada,iniciada,terminada}
 
-class PARTIDA{
+class Partida{
   late Estado estado;
   Partida(){
-    estado=Estado.creada;
+    estado = Estado.creada;
   }
 }
