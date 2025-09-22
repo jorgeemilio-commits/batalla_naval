@@ -27,11 +27,21 @@ class Nombre {
         throw CaracteresInvalidosException();
       }
     }
-
+  /*
+  bool soloCaracteresPermitidos(String c) {
+    var conjuntoPermitido = caracteresPermitidos.split('').toSet()<
+    var conjuntoActual = c.split('').toSet();
+    if (conjuntoActual.difference(conjuntoPermitido).isNotEmpty) {
+      return false;
+    }
+    return true;
+  }
+  */
     candidato = c;
   }
 }
 
+const caracteresPermitidos = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñÑ0123456789';
 const int LongitudMinimaPermitida = 5;
 const int LongitudMaximaPermitida = 15;
 
