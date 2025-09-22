@@ -18,25 +18,13 @@ class Nombre {
     }
 
     // Verifica que no tenga caracteres especiales
-    for (final codeUnit in c.codeUnits) {
-      final isDigit = codeUnit >= 48 && codeUnit <= 57; // 0-9
-      final isUppercase = codeUnit >= 65 && codeUnit <= 90; // A-Z
-      final isLowercase = codeUnit >= 97 && codeUnit <= 122; // a-z
-
-      if (!isDigit && !isUppercase && !isLowercase) {
+    final Set<String> allowedCharsSet = caracteresPermitidos.split('').toSet();
+    for (final char in c.split('')) {
+      if (!allowedCharsSet.contains(char)) {
         throw CaracteresInvalidosException();
       }
     }
-  /*
-  bool soloCaracteresPermitidos(String c) {
-    var conjuntoPermitido = caracteresPermitidos.split('').toSet()<
-    var conjuntoActual = c.split('').toSet();
-    if (conjuntoActual.difference(conjuntoPermitido).isNotEmpty) {
-      return false;
-    }
-    return true;
-  }
-  */
+    // Si pasa todas las validaciones, asigna el nombre
     candidato = c;
   }
 }
