@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
 
     test('Al crearse debe marcarse', () {
-      Partida partida = new Partida();
+      Partida partida = Partida();
       expect(partida.estado, equals(Estado.creada));
     });
 }

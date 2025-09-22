@@ -3,12 +3,12 @@ class Nombre {
 
   Nombre(String c) {
     // Verifica longitud minima
-    if (c.length < LongitudMinimaPermitida) {
+    if (c.length < longitudMinimaPermitida) {
       throw LongitudMinimaException();
     }
 
     // Verifica longitud maxima
-    if (c.length > LongitudMaximaPermitida) {
+    if (c.length > longitudMaximaPermitida) {
       throw LongitudMaximaException();
     }
 
@@ -30,8 +30,8 @@ class Nombre {
 }
 
 const caracteresPermitidos = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñÑ0123456789';
-const int LongitudMinimaPermitida = 5;
-const int LongitudMaximaPermitida = 15;
+const int longitudMinimaPermitida = 5;
+const int longitudMaximaPermitida = 15;
 
 class LongitudMinimaException extends Error {}
 class LongitudMaximaException extends Error {}
