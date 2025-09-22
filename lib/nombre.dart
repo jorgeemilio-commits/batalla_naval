@@ -13,13 +13,19 @@ class Nombre {
     }
 
     // Verifica que el primer caracter no sea un número
-    if (RegExp(r'^[0-9]').hasMatch(c)) {
+    if (int.tryParse(c[0]) != null) {
       throw PrimerCaracterNumeroException();
     }
 
     // Verifica que no tenga caracteres especiales
-    if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(c)) {
-      throw CaracteresInvalidosException();
+    for (final codeUnit in c.codeUnits) {
+      final isDigit = codeUnit >= 48 && codeUnit <= 57; // 0-9
+      final isUppercase = codeUnit >= 65 && codeUnit <= 90; // A-Z
+      final isLowercase = codeUnit >= 97 && codeUnit <= 122; // a-z
+
+      if (!isDigit && !isUppercase && !isLowercase) {
+        throw CaracteresInvalidosException();
+      }
     }
 
     candidato = c;
