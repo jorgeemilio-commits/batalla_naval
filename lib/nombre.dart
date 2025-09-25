@@ -18,9 +18,9 @@ class Nombre {
     }
 
     // Verifica que no tenga caracteres especiales
-    final Set<String> allowedCharsSet = caracteresPermitidos.split('').toSet();
+    final Set<String> permiteCaracter = caracteresPermitidos.split('').toSet();
     for (final char in c.split('')) {
-      if (!allowedCharsSet.contains(char)) {
+      if (!permiteCaracter.contains(char)) {
         throw CaracteresInvalidosException();
       }
     }
