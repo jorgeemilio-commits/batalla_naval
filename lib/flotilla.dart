@@ -1,0 +1,93 @@
+import 'dart:io';
+import 'package:batalla_naval/punto.dart';
+import 'package:batalla_naval/elemento.dart'; 
+enum TiposBarcos{bote,lancha,submarino,crucero,portaaviones}
+
+enum DireccionesHacia{arriba,abajo,izquierda,derecha}
+
+class Barco{ 
+final TiposBarcos tipo;
+final DireccionesHacia direccion; 
+final Punto puntoIncial;
+List<Elemento> _elementos = [];
+
+Barco({ 
+  required this.tipo, 
+  required this.puntoIncial, 
+  required this.direccion
+  })
+  {
+    int cuantasVeces = mapaTamanos[tipo]!;
+    int columna = puntoIncial.columna;
+    int fila = puntoIncial.fila;
+    while (cuantasVeces > 0) {
+      _elementos.add(
+        Elemento(
+          punto: Punto(columna: columna, fila: fila),
+        ));
+        columna += dColumna[direccion]!;
+        fila += dfila[direccion]!;
+        cuantasVeces--;
+    }
+  }
+}
+
+const mapaTamanos = {
+  TiposBarcos.bote:1,
+  TiposBarcos.lancha:2,
+  TiposBarcos.submarino:3,
+  TiposBarcos.crucero:4,
+  TiposBarcos.portaaviones:5
+};
+
+var dfila = {
+  DireccionesHacia.arriba: -1,
+  DireccionesHacia.abajo: 1,
+  DireccionesHacia.izquierda: 0,
+  DireccionesHacia.derecha: 0
+};
+
+var dColumna = {
+  DireccionesHacia.arriba: 0,
+  DireccionesHacia.abajo: 0,
+  DireccionesHacia.izquierda: -1,
+  DireccionesHacia.derecha: 1
+};
+
+class flotilla{
+ final List<Barco> _barcos;
+ int get cabtidadadBarcos => _barcos.length;
+ flotilla(this._barcos){
+  if (!esCantidadCorrecta()) throw FlotillaCantidadExcepcion();
+  if(!sonTiposCorrectos(_barcos)) throw FlotillaTiposExcepcion();
+  if(!estanEnPosicionAdecuada()) throw FlotillaTiposExcepcion();
+ }
+}
+
+
+
+
+
+/*
+int get tamano { 
+  return mapaTamanos[tipo]!;
+}
+
+bool validarFlotilla(List<String> nombres) {
+  if (_hayNombresRepetidos(nombres)) {
+    throw Exception('No se permiten nombres de barcos repetidos.'); 
+  }
+  if (_excedeTamanoMaximoFlotilla(nombres)) {
+    throw Exception('La flotilla no puede tener más de 5 barcos.'); 
+  }
+  return true; // Si todas las validaciones pasan, la flotilla es válida
+}
+
+bool _hayNombresRepetidos(List<String> nombres) {
+  return nombres.length != nombres.toSet().length;
+}
+
+bool _excedeTamanoMaximoFlotilla(List<String> nombres) {
+   const int maximoPermitido = 5;
+  return nombres.length > maximoPermitido;
+}*/

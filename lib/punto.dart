@@ -15,7 +15,5 @@ num hipo = pow(x,2) + pow(y,2);
 num raiz = sqrt(hipo);
 return raiz.toInt();
 
-return 0;
-
 }
 }
