@@ -11,6 +11,8 @@ final DireccionesHacia direccion;
 final Punto puntoIncial;
 List<Elemento> _elementos = [];
 
+int get tamano => mapaTamanos[tipo]!;
+
 Barco({ 
   required this.tipo, 
   required this.puntoIncial, 
@@ -30,6 +32,26 @@ Barco({
         cuantasVeces--;
     }
   }
+}
+
+
+bool validarFlotilla(List<String> nombres) {
+  if (_hayNombresRepetidos(nombres)) {
+    throw Exception('No se permiten nombres de barcos repetidos.'); 
+  }
+  if (_excedeTamanoMaximoFlotilla(nombres)) {
+    throw Exception('La flotilla no puede tener más de 5 barcos.'); 
+  }
+  return true; // Si todas las validaciones pasan, la flotilla es válida
+}
+
+bool _hayNombresRepetidos(List<String> nombres) {
+  return nombres.length != nombres.toSet().length;
+}
+
+bool _excedeTamanoMaximoFlotilla(List<String> nombres) {
+   const int maximoPermitido = 5;
+  return nombres.length > maximoPermitido;
 }
 
 const mapaTamanos = {
@@ -62,32 +84,56 @@ class flotilla{
   if(!sonTiposCorrectos(_barcos)) throw FlotillaTiposExcepcion();
   if(!estanEnPosicionAdecuada()) throw FlotillaTiposExcepcion();
  }
+
+ bool esCantidadCorrecta() {
+   const int minBarcosPermitidos = 1;
+   const int maxBarcosPermitidos = 5;
+   return _barcos.length >= minBarcosPermitidos && _barcos.length <= maxBarcosPermitidos;
+ }
+
+ bool sonTiposCorrectos(List<Barco> barcos) {
+   final Set<TiposBarcos> tiposEnFlotilla = {};
+   for (final barco in barcos) {
+     if (tiposEnFlotilla.contains(barco.tipo)) {
+       return false;
+     }
+     tiposEnFlotilla.add(barco.tipo);
+   }
+   return true;
+ }
+
+ bool estanEnPosicionAdecuada() {
+   const int boardMin = 0;
+   const int boardMax = 9;
+
+   for (final barco in _barcos) {
+     for (final elemento in barco._elementos) {
+       if (elemento.punto.columna < boardMin || elemento.punto.columna > boardMax ||
+           elemento.punto.fila < boardMin || elemento.punto.fila > boardMax) {
+         return false;
+       }
+     }
+   }
+
+   final Set<Punto> puntosOcupados = {};
+   for (final barco in _barcos) {
+     for (final elemento in barco._elementos) {
+       if (!puntosOcupados.add(elemento.punto)) {
+         return false;
+       }
+     }
+   }
+
+   return true;
+ }
 }
 
-
-
-
-
-/*
-int get tamano { 
-  return mapaTamanos[tipo]!;
+class FlotillaCantidadExcepcion implements Exception {
+  String toString() => 'La flotilla debe tener entre 1 y 5 barcos.';
 }
-
-bool validarFlotilla(List<String> nombres) {
-  if (_hayNombresRepetidos(nombres)) {
-    throw Exception('No se permiten nombres de barcos repetidos.'); 
-  }
-  if (_excedeTamanoMaximoFlotilla(nombres)) {
-    throw Exception('La flotilla no puede tener más de 5 barcos.'); 
-  }
-  return true; // Si todas las validaciones pasan, la flotilla es válida
+class FlotillaTiposExcepcion implements Exception {
+  String toString() => 'La flotilla tiene tipos de barcos inválidos o repetidos.';
 }
-
-bool _hayNombresRepetidos(List<String> nombres) {
-  return nombres.length != nombres.toSet().length;
+class FlotillaPosicionExcepcion implements Exception {
+  String toString() => 'La flotilla tiene barcos fuera del tablero o en posiciones inválidas.';
 }
-
-bool _excedeTamanoMaximoFlotilla(List<String> nombres) {
-   const int maximoPermitido = 5;
-  return nombres.length > maximoPermitido;
-}*/
