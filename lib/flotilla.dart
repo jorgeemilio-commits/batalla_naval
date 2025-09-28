@@ -82,7 +82,7 @@ class flotilla{
  flotilla(this._barcos){
   if (!esCantidadCorrecta()) throw FlotillaCantidadExcepcion();
   if(!sonTiposCorrectos(_barcos)) throw FlotillaTiposExcepcion();
-  if(!estanEnPosicionAdecuada()) throw FlotillaTiposExcepcion();
+  if(!estanEnPosicionAdecuada()) throw FlotillaPosicionExcepcion();
  }
 
  bool esCantidadCorrecta() {

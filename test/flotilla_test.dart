@@ -51,14 +51,14 @@ void main() {
 
     test('Debe lanzar FlotillaPosicionExcepcion si los barcos se superponen', () {
       final barco1 = Barco(
-        tipo: TiposBarcos.bote, 
+        tipo: TiposBarcos.bote,
         puntoIncial: Punto(columna: 1, fila: 1),
         direccion: DireccionesHacia.derecha,
       );
       final barco2 = Barco(
-        tipo: TiposBarcos.bote, 
-        puntoIncial: Punto(columna: 1, fila: 1),
-        direccion: DireccionesHacia.derecha,
+        tipo: TiposBarcos.lancha, // Cambiado a un tipo diferente
+        puntoIncial: Punto(columna: 1, fila: 1), // Sigue superponiéndose
+        direccion: DireccionesHacia.abajo,
       );
       final barcos = [barco1, barco2];
       expect(() => flotilla(barcos), throwsA(isA<FlotillaPosicionExcepcion>()));
