@@ -139,8 +139,9 @@ class flotilla{
    }
 
    // 3. Verificar adyacencia (que los barcos no se toquen, ni siquiera diagonalmente)
+   //estas 2 listas representan los 8 posibles movimientos alrededor de un punto
    final List<int> dColumnaVecinos = [-1, -1, -1, 0, 0, 1, 1, 1];
-   final List<int> dFilaVecinos = [-1, 0, 1, -1, 1, -1, 0, 1];
+   final List<int> dFilaVecinos   =  [-1, 0, 1, -1, 1, -1, 0, 1];
 
    for (final barco1 in _barcos) {
      for (final elemento1 in barco1.elementos) {
