@@ -9,10 +9,10 @@ class Barco{
 final TiposBarcos tipo;
 final DireccionesHacia direccion;
 final Punto puntoIncial;
-List<Elemento> _elementos = []; // Esta es la propiedad privada
+List<Elemento> _elementos = []; 
 
 // Getter público para acceder a los elementos
-List<Elemento> get elementos => _elementos; // Añade esta línea
+List<Elemento> get elementos => _elementos; 
 
 int get tamano => mapaTamanos[tipo]!;
 
