@@ -20,20 +20,12 @@ void main() {
 
   group('Barco', () {
     test('Barco portaaviones tiene tamaño 5', () {
-      final miBarco = Barco(
-        tipo: TiposBarcos.portaaviones,
-        puntoIncial: Punto(columna: 1, fila: 1),
-        direccion: DireccionesHacia.derecha,
-      );
+      final miBarco = Barco(tipo: TiposBarcos.portaaviones, puntoIncial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.derecha, );
       expect(miBarco.tamano, 5);
     });
 
     test('Barco lancha tiene tamaño 2', () {
-      final miBarco = Barco(
-        tipo: TiposBarcos.lancha,
-        puntoIncial: Punto(columna: 1, fila: 1),
-        direccion: DireccionesHacia.derecha,
-      );
+      final miBarco = Barco(tipo: TiposBarcos.lancha, puntoIncial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.derecha,);
       expect(miBarco.tamano, 2);
     });
 
@@ -68,12 +60,8 @@ void main() {
 
     test('Barco bote se crea correctamente en A0', () {
       // Crear un bote (tamaño 1) en columna 0, fila 0 (A0)
-      final miBarco = Barco(
-        tipo: TiposBarcos.bote,
-        puntoIncial: Punto(columna: 0, fila: 0), // A0
-        direccion: DireccionesHacia.derecha,
-      );
-
+      final miBarco = Barco(tipo: TiposBarcos.bote, puntoIncial: Punto(columna: 0, fila: 0), direccion: DireccionesHacia.derecha,);
+      // 0, fila 0 (A0)
       final puntosOcupados = miBarco.elementos.map((e) => e.punto).toSet();
 
       final puntoA0 = Punto(columna: 0, fila: 0);
@@ -88,12 +76,8 @@ void main() {
 
     test('Barco submarino se crea correctamente en C3 hacia abajo', () {
       // Crear un submarino (tamaño 3) en columna 2, fila 3 (C3) hacia abajo
-      final miBarco = Barco(
-        tipo: TiposBarcos.submarino,
-        puntoIncial: Punto(columna: 2, fila: 3), // C3
-        direccion: DireccionesHacia.abajo,
-      );
-
+      final miBarco = Barco(tipo: TiposBarcos.submarino, puntoIncial: Punto(columna: 2, fila: 3), direccion: DireccionesHacia.abajo,);
+      // 2, fila 3 (C3) hacia abajo
       final puntosOcupados = miBarco.elementos.map((e) => e.punto).toSet();
 
       final puntoC3 = Punto(columna: 2, fila: 3);
@@ -112,12 +96,8 @@ void main() {
 
     test('Barco crucero se crea correctamente en G7 hacia la izquierda', () {
       // Crear un crucero (tamaño 4) en columna 6, fila 7 (G7) hacia la izquierda
-      final miBarco = Barco(
-        tipo: TiposBarcos.crucero,
-        puntoIncial: Punto(columna: 6, fila: 7), // G7
-        direccion: DireccionesHacia.izquierda,
-      );
-
+      final miBarco = Barco( tipo: TiposBarcos.crucero, puntoIncial: Punto(columna: 6, fila: 7), direccion: DireccionesHacia.izquierda,);
+      // 6, fila 7 (G7) hacia la izquierda
       final puntosOcupados = miBarco.elementos.map((e) => e.punto).toSet();
 
       final puntoG7 = Punto(columna: 6, fila: 7);
@@ -138,12 +118,8 @@ void main() {
 
     test('Barco portaaviones se crea correctamente en A1 hacia arriba', () {
       // Crear un portaaviones (tamaño 5) en columna 0, fila 1 (A1) hacia arriba
-      final miBarco = Barco(
-        tipo: TiposBarcos.portaaviones,
-        puntoIncial: Punto(columna: 0, fila: 4), // A4
-        direccion: DireccionesHacia.arriba,
-      );
-
+      final miBarco = Barco(tipo: TiposBarcos.portaaviones, puntoIncial: Punto(columna: 0, fila: 4), direccion: DireccionesHacia.arriba, );
+      // 0, fila 4 (A4) hacia arriba
       final puntosOcupados = miBarco.elementos.map((e) => e.punto).toSet();
 
       final puntoA4 = Punto(columna: 0, fila: 4);
@@ -167,11 +143,7 @@ void main() {
 
   group('Flotilla', () {
     test('Debe lanzar FlotillaPosicionExcepcion si un barco esta fuera del tablero', () {
-      final barcoFuera = Barco(
-        tipo: TiposBarcos.lancha,
-        puntoIncial: Punto(columna: 0, fila: 0),
-        direccion: DireccionesHacia.arriba,
-      );
+      final barcoFuera = Barco(tipo: TiposBarcos.lancha,puntoIncial: Punto(columna: 0, fila: 0),direccion: DireccionesHacia.arriba,);
       final barcos = [barcoFuera];
       expect(() => flotilla(barcos), throwsA(isA<FlotillaPosicionExcepcion>()));
     });
@@ -194,50 +166,54 @@ void main() {
     });
 
     test('Debe lanzar FlotillaTiposExcepcion si hay tipos de barcos repetidos', () {
-      final barco1 = Barco(
-        tipo: TiposBarcos.bote,
-        puntoIncial: Punto(columna: 0, fila: 0),
-        direccion: DireccionesHacia.derecha,
-      );
-      final barco2 = Barco(
-        tipo: TiposBarcos.bote, 
-        puntoIncial: Punto(columna: 2, fila: 0),
-        direccion: DireccionesHacia.derecha,
-      );
+      final barco1 = Barco(tipo: TiposBarcos.bote, puntoIncial: Punto(columna: 0, fila: 0), direccion: DireccionesHacia.derecha,);
+      final barco2 = Barco(tipo: TiposBarcos.bote, puntoIncial: Punto(columna: 2, fila: 0), direccion: DireccionesHacia.derecha,);
       final barcos = [barco1, barco2];
       expect(() => flotilla(barcos), throwsA(isA<FlotillaTiposExcepcion>()));
     });
 
     test('Flotilla con barcos en posiciones correctas y sin solapamiento debe ser válida', () {
       final barcosCorrectos = [
-        Barco(
-          tipo: TiposBarcos.bote,
-          puntoIncial: Punto(columna: 0, fila: 0),
-          direccion: DireccionesHacia.derecha,
-        ),
-        Barco(
-          tipo: TiposBarcos.lancha,
-          puntoIncial: Punto(columna: 2, fila: 0),
-          direccion: DireccionesHacia.derecha,
-        ),
-        Barco(
-          tipo: TiposBarcos.submarino,
-          puntoIncial: Punto(columna: 5, fila: 0),
-          direccion: DireccionesHacia.derecha,
-        ),
-        Barco(
-          tipo: TiposBarcos.crucero,
-          puntoIncial: Punto(columna: 0, fila: 2),
-          direccion: DireccionesHacia.derecha,
-        ),
-        Barco(
-          tipo: TiposBarcos.portaaviones,
-          puntoIncial: Punto(columna: 5, fila: 2),
-          direccion: DireccionesHacia.derecha,
-        ),
+        Barco(tipo: TiposBarcos.bote, puntoIncial: Punto(columna: 0, fila: 0), direccion: DireccionesHacia.derecha,),
+        Barco(tipo: TiposBarcos.lancha, puntoIncial: Punto(columna: 2, fila: 0), direccion: DireccionesHacia.derecha,),
+        Barco(tipo: TiposBarcos.submarino, puntoIncial: Punto(columna: 5, fila: 0), direccion: DireccionesHacia.derecha,),
+        Barco(tipo: TiposBarcos.crucero, puntoIncial: Punto(columna: 0, fila: 2),direccion: DireccionesHacia.derecha,),
+        Barco(tipo: TiposBarcos.portaaviones, puntoIncial: Punto(columna: 5, fila: 2), direccion: DireccionesHacia.derecha,),
       ];
       expect(() => flotilla(barcosCorrectos), returnsNormally);
     });
 
+    test('Debe lanzar FlotillaPosicionExcepcion si los barcos estan adyacentes (horizontalmente)', () {
+      final barco1 = Barco(tipo: TiposBarcos.bote,puntoIncial: Punto(columna: 0, fila: 0), direccion: DireccionesHacia.derecha,);
+      final barco2 = Barco(tipo: TiposBarcos.lancha, puntoIncial: Punto(columna: 1, fila: 0), direccion: DireccionesHacia.derecha,);
+      // (1,0) es horizontalmente adyacente a (0,0)
+      final barcos = [barco1, barco2];
+      expect(() => flotilla(barcos), throwsA(isA<FlotillaPosicionExcepcion>()));
+    });
+
+    test('Debe lanzar FlotillaPosicionExcepcion si los barcos estan adyacentes (verticalmente)', () {
+      final barco1 = Barco(tipo: TiposBarcos.bote, puntoIncial: Punto(columna: 0, fila: 0), direccion: DireccionesHacia.derecha,);
+      final barco2 = Barco(tipo: TiposBarcos.lancha, puntoIncial: Punto(columna: 0, fila: 1), direccion: DireccionesHacia.derecha,);
+      // (0,1) es verticalmente adyacente a (0,0)
+      final barcos = [barco1, barco2];
+      expect(() => flotilla(barcos), throwsA(isA<FlotillaPosicionExcepcion>()));
+    });
+
+    test('Debe lanzar FlotillaPosicionExcepcion si los barcos estan adyacentes (diagonalmente)', () {
+      final barco1 =  Barco(tipo: TiposBarcos.bote, puntoIncial: Punto(columna: 0, fila: 0), direccion: DireccionesHacia.derecha,);
+      final barco2 = Barco(tipo: TiposBarcos.lancha,  puntoIncial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.derecha,);
+      // (1,1) es diagonalmente adyacente a (0,0) 
+      final barcos = [barco1, barco2];
+      expect(() => flotilla(barcos), throwsA(isA<FlotillaPosicionExcepcion>()));
+    });
+
+    test('Flotilla con barcos separados por al menos un bloque debe ser válida', () {
+      final barcosSeparados = [
+        Barco(tipo: TiposBarcos.bote, puntoIncial: Punto(columna: 0, fila: 0), direccion: DireccionesHacia.derecha),
+        Barco(tipo: TiposBarcos.lancha, puntoIncial: Punto(columna: 0, fila: 2), direccion: DireccionesHacia.derecha), // Separados por (0,1)
+        Barco(tipo: TiposBarcos.submarino, puntoIncial: Punto(columna: 2, fila: 0), direccion: DireccionesHacia.derecha), // Separados de los otros
+      ];
+      expect(() => flotilla(barcosSeparados), returnsNormally);
+    });
   });
 }

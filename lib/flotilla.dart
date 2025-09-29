@@ -81,10 +81,20 @@ var dColumna = {
 
 class flotilla{
  final List<Barco> _barcos;
+ // Nueva lista para almacenar todos los elementos de todos los barcos
+ final List<Elemento> _todosLosElementos = [];
+
  int get cabtidadadBarcos => _barcos.length;
+
  flotilla(this._barcos){
   if (!esCantidadCorrecta()) throw FlotillaCantidadExcepcion();
   if(!sonTiposCorrectos(_barcos)) throw FlotillaTiposExcepcion();
+
+  // Poblar la lista _todosLosElementos después de las validaciones iniciales
+  for (final barco in _barcos) {
+    _todosLosElementos.addAll(barco.elementos); // Usamos el getter público 'elementos'
+  }
+
   if(!estanEnPosicionAdecuada()) throw FlotillaPosicionExcepcion();
  }
 
@@ -109,25 +119,53 @@ class flotilla{
    const int boardMin = 0;
    const int boardMax = 9;
 
+   // 1. Verificar que los barcos estén dentro del tablero
+   for (final elemento in _todosLosElementos) {
+     if (elemento.punto.columna < boardMin || elemento.punto.columna > boardMax ||
+         elemento.punto.fila < boardMin || elemento.punto.fila > boardMax) {
+       return false; // Parte del barco fuera del tablero
+     }
+   }
+
+   // 2. Construir un mapa de puntos ocupados a sus respectivos objetos Barco
+   final Map<Punto, Barco> ocupacionTablero = {};
    for (final barco in _barcos) {
-     for (final elemento in barco._elementos) {
-       if (elemento.punto.columna < boardMin || elemento.punto.columna > boardMax ||
-           elemento.punto.fila < boardMin || elemento.punto.fila > boardMax) {
-         return false;
+     for (final elemento in barco.elementos) {
+       if (ocupacionTablero.containsKey(elemento.punto)) {
+         return false; // Superposición directa detectada
+       }
+       ocupacionTablero[elemento.punto] = barco;
+     }
+   }
+
+   // 3. Verificar adyacencia (que los barcos no se toquen, ni siquiera diagonalmente)
+   final List<int> dColumnaVecinos = [-1, -1, -1, 0, 0, 1, 1, 1];
+   final List<int> dFilaVecinos = [-1, 0, 1, -1, 1, -1, 0, 1];
+
+   for (final barco1 in _barcos) {
+     for (final elemento1 in barco1.elementos) {
+       final Punto p1 = elemento1.punto;
+
+       for (int i = 0; i < 8; i++) {
+         final Punto vecinoPunto = Punto(
+           columna: p1.columna + dColumnaVecinos[i],
+           fila: p1.fila + dFilaVecinos[i],
+         );
+
+         // Verificar si este punto vecino está ocupado en el tablero
+         if (ocupacionTablero.containsKey(vecinoPunto)) {
+           final Barco? barco2 = ocupacionTablero[vecinoPunto];
+
+           // Si el punto vecino está ocupado por un barco DIFERENTE, es una violación de adyacencia
+           if (barco2 != null && barco1 != barco2) {
+             return false; // Violación de adyacencia
+           }
+         }
        }
      }
    }
 
-   final Set<Punto> puntosOcupados = {};
-   for (final barco in _barcos) {
-     for (final elemento in barco._elementos) {
-       if (!puntosOcupados.add(elemento.punto)) {
-         return false;
-       }
-     }
-   }
-
-   return true;
+   return true; // Todas las verificaciones pasaron
  }
 }
 
