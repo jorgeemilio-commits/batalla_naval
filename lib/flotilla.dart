@@ -5,17 +5,20 @@ enum TiposBarcos{bote,lancha,submarino,crucero,portaaviones}
 
 enum DireccionesHacia{arriba,abajo,izquierda,derecha}
 
-class Barco{ 
+class Barco{
 final TiposBarcos tipo;
-final DireccionesHacia direccion; 
+final DireccionesHacia direccion;
 final Punto puntoIncial;
-List<Elemento> _elementos = [];
+List<Elemento> _elementos = []; // Esta es la propiedad privada
+
+// Getter público para acceder a los elementos
+List<Elemento> get elementos => _elementos; // Añade esta línea
 
 int get tamano => mapaTamanos[tipo]!;
 
-Barco({ 
-  required this.tipo, 
-  required this.puntoIncial, 
+Barco({
+  required this.tipo,
+  required this.puntoIncial,
   required this.direccion
   })
   {
